@@ -7,6 +7,7 @@ $(document).ready(function(){
     })
 
     function bacaData(){
+        $('.targetData').html('');
         $.ajax({
             type: 'GET',
             url: 'php/getData.php',
@@ -36,7 +37,28 @@ $(document).ready(function(){
         let harga_barang = $('#txt_harga_barang').val();
         let stok = $('#txt_stok').val();
 
-        alert(nama_barang + harga_barang + stok);
+        $.ajax({
+            type: 'POST',
+            url: 'php/addData.php',
+            data: 'nama_barang='+nama_barang+"&harga_barang="+harga_barang+"&stok="+stok,
+            dataType: 'JSON',
+            success:function(response){
+                if(response.success == true){
+                    alert(response.message);
+                    bacaData();
+                    resetForm();
+                }else{
+                    alert(response.message);
+                    bacaData();
+                    resetForm();
+                }
+            }
+        });
     }
 
-})
+    function resetForm(){
+        $('#txt_nama_barang').val('');
+        $('#txt_harga_barang').val('');
+        $('#txt_stok').val('');
+    }
+});
