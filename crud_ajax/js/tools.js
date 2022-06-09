@@ -68,8 +68,16 @@ $(document).ready(function(){
             type: 'POST',
             url: 'php/getSingleData.php',
             data: 'id='+x,
+            dataType: 'JSON',
             success: function(response){
-                console.log(response);
+                $('#txt_id').val(response.id);
+                $('#txt_nama_barang').val(response.nama_barang);
+                $('#txt_harga_barang').val(response.harga_barang);
+                $('#txt_stok').val(response.stok);
+
+                $('#btn-tambah').hide();
+                $('#btn-ubah').show();
+                $('#btn-batal').show();
             }
         })
     }
