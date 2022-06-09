@@ -10,8 +10,16 @@ $(document).ready(function(){
         ubahData();
     })
 
+    $('#btn-batal').click(function(){
+        resetForm();
+        bacaData();
+    })
+
     function bacaData(){
         $('.targetData').html('');
+        $('#btn-tambah').show();
+        $('#btn-ubah').hide();
+        $('#btn-batal').hide();
         $.ajax({
             type: 'GET',
             url: 'php/getData.php',
@@ -36,9 +44,14 @@ $(document).ready(function(){
                     `
                 }
                 $('.targetData').append(data);
+
                 $('.btn-edit').click(function(){
                     getSingleData($(this).attr('id'));
                 });
+
+                $('.btn-delete').click(function(){
+                    deleteData($(this).attr('id'));
+                })
             }
         });
     }
@@ -108,6 +121,24 @@ $(document).ready(function(){
                 }
             }
         });
+    }
+
+    function deleteData(x){
+        $.ajax({
+            type: 'POST',
+            url: 'php/deleteData.php',
+            dataType: 'JSON',
+            data: 'id='+x,
+            success: function(response){
+                if(response.success == true){
+                    alert(response.message);
+                    bacaData();
+                }else{
+                    alert(response.message);
+                    bacaData();
+                }
+            }
+        })
     }
 
     function resetForm(){
