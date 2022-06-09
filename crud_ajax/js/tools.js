@@ -6,6 +6,10 @@ $(document).ready(function(){
         tambahData();
     })
 
+    $('#btn-ubah').click(function(){
+        ubahData();
+    })
+
     function bacaData(){
         $('.targetData').html('');
         $.ajax({
@@ -82,7 +86,32 @@ $(document).ready(function(){
         })
     }
 
+    function ubahData(){
+        let id = $('#txt_id').val();
+        let nama_barang = $('#txt_nama_barang').val();
+        let harga_barang = $('#txt_harga_barang').val();
+        let stok = $('#txt_stok').val();
+        $.ajax({
+            type: 'POST',
+            url: 'php/editData.php',
+            data: 'id='+id+'&nama_barang='+nama_barang+"&harga_barang="+harga_barang+"&stok="+stok,
+            dataType: 'JSON',
+            success: function(response){
+                if(response.success == true){
+                    alert(response.message);
+                    bacaData();
+                    resetForm();
+                }else{
+                    alert(response.message);
+                    bacaData();
+                    resetForm();
+                }
+            }
+        });
+    }
+
     function resetForm(){
+        $('#txt_id').val('');
         $('#txt_nama_barang').val('');
         $('#txt_harga_barang').val('');
         $('#txt_stok').val('');
