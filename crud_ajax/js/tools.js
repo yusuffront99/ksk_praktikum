@@ -24,10 +24,17 @@ $(document).ready(function(){
                     <td>`+response[i].nama_barang+`</td>
                     <td>`+response[i].harga_barang+`</td>
                     <td>`+response[i].stok+`</td>
+                    <td>
+                    <button class='btn-edit' id='`+response[i].id+`'>Edit</button>
+                    <button class='btn-delete' id='`+response[i].id+`'>Delete</button>
+                    </td>
                     </tr>
                     `
                 }
                 $('.targetData').append(data);
+                $('.btn-edit').click(function(){
+                    getSingleData($(this).attr('id'));
+                });
             }
         });
     }
@@ -56,9 +63,21 @@ $(document).ready(function(){
         });
     }
 
+    function getSingleData(x){
+        $.ajax({
+            type: 'POST',
+            url: 'php/getSingleData.php',
+            data: 'id='+x,
+            success: function(response){
+                console.log(response);
+            }
+        })
+    }
+
     function resetForm(){
         $('#txt_nama_barang').val('');
         $('#txt_harga_barang').val('');
         $('#txt_stok').val('');
     }
+
 });
