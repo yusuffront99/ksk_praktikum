@@ -2,10 +2,8 @@
 
     include 'connection.php';
 
-        // $result = [];
         $sql = mysqli_query($connection, "SELECT * FROM tbl_data");
-        $result = [];
-    
+        $result = array();
         while($fetchData = mysqli_fetch_array($sql)){
             $result[] = $fetchData;
         }
